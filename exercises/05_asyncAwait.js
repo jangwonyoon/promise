@@ -15,7 +15,7 @@ const util = require("util");
 
 const {
   getBodyFromGetRequestPromise,
-  getDataFromFilePromise
+  getDataFromFilePromise,
 } = require("../exercises/02_promiseConstructor");
 
 const writeFilePromise = util.promisify(fs.writeFile);
@@ -36,8 +36,17 @@ const writeFilePromise = util.promisify(fs.writeFile);
 
 const BASE_URL = "https://koreanjson.com/users/";
 
-const fetchUsersAndWriteToFileAsync = async (readFilePath, writeFilePath) => {};
+const fetchUsersAndWriteToFileAsync = async (readFilePath, writeFilePath) => {
+  const str = "";
+  const data = await getDataFromFilePromise(readFilePath);
+  const user = data.map((id) => getBodyFromGetRequestPromise(BASE_URL + id));
+  const result = await Promise.all(user);
+  const name = result.map((result) => str + result.name + "\n");
+  const write = writeFilePromise(writeFilePath, name.join(""));
+
+  return write;
+};
 
 module.exports = {
-  fetchUsersAndWriteToFileAsync
+  fetchUsersAndWriteToFileAsync,
 };

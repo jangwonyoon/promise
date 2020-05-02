@@ -2,14 +2,14 @@ const util = require("util");
 
 const {
   getDataFromFile,
-  getBodyFromGetRequest
+  getBodyFromGetRequest,
 } = require("../exercises/01_callBack");
 
-const getDataFromFilePromise
+const getDataFromFilePromise = util.promisify(getDataFromFile);
 
-const getBodyFromGetRequestPromise
+const getBodyFromGetRequestPromise = util.promisify(getBodyFromGetRequest);
 
 module.exports = {
   getDataFromFilePromise,
-  getBodyFromGetRequestPromise
+  getBodyFromGetRequestPromise,
 };

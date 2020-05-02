@@ -16,14 +16,30 @@ const request = require("request");
  * callback 함수에 넘겨 줄 Array
  * ["윤상호", "구일모", "이호용", "정진석, 박준홍", "최규홍"]
  */
-const getDataFromFilePromise = filePath => {};
+const getDataFromFilePromise = (filePath) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filePath, "utf8", (err, data) => {
+      if (err) return reject(err);
+      return resolve(data.split("\n"));
+    });
+  }).catch((err) => {
+    console.log(err);
+  });
+};
 
 /**
  * 아래 함수는 항상 Http Response의 Body를 callback함수에 넘겨주어야 합니다.
  */
-const getBodyFromGetRequestPromise = url => {};
+const getBodyFromGetRequestPromise = (url) => {
+  return new Promise((resolve, reject) => {
+    request(url, (err, data, body) => {
+      if (err) return reject(err);
+      return resolve(JSON.parse(body));
+    });
+  });
+};
 
 module.exports = {
   getDataFromFilePromise,
-  getBodyFromGetRequestPromise
+  getBodyFromGetRequestPromise,
 };
